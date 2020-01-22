@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot20200112.mapper.TicketMapper">
+  <resultMap id="BaseResultMap" type="com.example.springboot20200112.pojo.Ticket">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="scenic_spot_id" jdbcType="BIGINT" property="scenicSpotId" />
+    <result column="ticket_name" jdbcType="VARCHAR" property="ticketName" />
+    <result column="ticket_price_adult" jdbcType="DOUBLE" property="ticketPriceAdult" />
+    <result column="ticket_price_student" jdbcType="DOUBLE" property="ticketPriceStudent" />
+    <result column="ticket_number_adult" jdbcType="INTEGER" property="ticketNumberAdult" />
+    <result column="ticket_number_student" jdbcType="INTEGER" property="ticketNumberStudent" />
+    <result column="ticket_describe" jdbcType="VARCHAR" property="ticketDescribe" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <update id="updateTicketNum" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";" open="" close="">
+      UPDATE t_ticket
+      <set>
+        <if test="item.ticketNumberAdult != null and item.ticketNumberAdult !=''">
+          ticket_number_adult=#{item.ticketNumberAdult},
+        </if>
+        <if test="item.ticketNumberStudent != null and item.ticketNumberStudent !=''">
+          ticket_number_student=#{item.ticketNumberStudent},
+        </if>
+        <if test="item.ticketPriceAdult != null and item.ticketPriceAdult !=''">
+          ticket_price_adult=#{item.ticketPriceAdult},
+        </if>
+        <if test="item.ticketPriceStudent != null and item.ticketPriceStudent !=''">
+          ticket_price_student=#{item.ticketPriceStudent},
+        </if>
+        <if test="item.ticketDescribe != null and item.ticketDescribe !=''">
+          ticket_describe=#{item.ticketDescribe},
+        </if>
+      </set>
+      WHERE id =#{item.id}
+    </foreach>
+  </update>
+</mapper>
